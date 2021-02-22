@@ -27,6 +27,7 @@ public class VideoManager : MonoBehaviour
     void Start()
     {
         pauseButton.SetActive(false);
+        backVideoButton.SetActive(false);
     }
 
     public void Play()
