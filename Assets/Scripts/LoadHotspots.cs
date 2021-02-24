@@ -5,6 +5,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System;
+#if UNITY_STANDALONE_WIN
+using AnotherFileBrowser.Windows;
+#endif
 
 public class LoadHotspots : MonoBehaviour
 {
@@ -17,15 +21,24 @@ public class LoadHotspots : MonoBehaviour
     public VideoPlayer videoPlayer;
 
     private Hashtable table;
+    private string json_path;
+    private Boolean loaded;
 
     void Start()
     {
-        table = load();
+        table = new Hashtable();
+        loaded = false;
         displayPanel.SetActive(false);
     }
 
     private void Update()
     {
+        if (json_path != null && !loaded)
+        {
+            table = load();
+            loaded = true;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -188,7 +201,8 @@ public class LoadHotspots : MonoBehaviour
     public Hashtable load()
     {
         Hashtable r = new Hashtable();
-        string hotspotjsons = File.ReadAllText(Application.dataPath + "/hotspots.json");
+        string hotspotjsons = File.ReadAllText(json_path);
+        //File.ReadAllText(Application.dataPath + "/hotspots.json");
         HotspotDatas hotspotdatas = JsonUtility.FromJson<HotspotDatas>(hotspotjsons);
         foreach (string json in hotspotdatas.hotspotdatas)
         {
@@ -197,5 +211,32 @@ public class LoadHotspots : MonoBehaviour
             r.Add(a.GetInstanceID().ToString(), new Hotspot(a, h1.start_time, h1.end_time, h1.name));
         }
         return r;
+    }
+
+    public void loadjson()
+    {
+        json_path = OpenFileBrowser("json");
+    }
+
+    // reference: https://github.com/SrejonKhan/AnotherFileBrowser Accessed on: 23rd Feb 2021
+    // <summary>
+    /// FileDialog for picking a single file
+    /// </summary>
+    public string OpenFileBrowser(string typee)
+    {
+#if UNITY_STANDALONE_WIN
+        var bp = new BrowserProperties();
+        bp.filter = typee + " files (*." + typee + ")|*." + typee;
+        bp.filterIndex = 0;
+
+        string res = "";
+
+        new FileBrowser().OpenFileBrowser(bp, result =>
+        {
+            res = result;
+        });
+
+        return res;
+#endif
     }
 }
