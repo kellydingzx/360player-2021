@@ -46,31 +46,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11268}
+      Script: {instanceID: 11260}
     - Class: 114
-      Script: {instanceID: 11426}
+      Script: {instanceID: 11418}
     - Class: 114
-      Script: {instanceID: 11466}
+      Script: {instanceID: 11458}
     - Class: 114
-      Script: {instanceID: 11530}
+      Script: {instanceID: 11522}
     - Class: 114
-      Script: {instanceID: 11856}
+      Script: {instanceID: 11848}
     - Class: 114
-      Script: {instanceID: 11898}
+      Script: {instanceID: 11890}
     - Class: 114
-      Script: {instanceID: 12242}
+      Script: {instanceID: 12236}
     - Class: 114
-      Script: {instanceID: 12264}
+      Script: {instanceID: 12258}
     - Class: 114
-      Script: {instanceID: 12420}
+      Script: {instanceID: 12414}
     - Class: 114
-      Script: {instanceID: 12722}
+      Script: {instanceID: 12716}
     - Class: 114
-      Script: {instanceID: 12978}
+      Script: {instanceID: 12814}
     - Class: 114
-      Script: {instanceID: 13074}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 13556}
+      Script: {instanceID: 13072}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -424,6 +424,12 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
+      Hash: e5d83d8736b02d4479d5bb358ec0ff9c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: choose
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -536,13 +542,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: e5d83d8736b02d4479d5bb358ec0ff9c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: choose
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/Desktop/build/360Player.exe
+  playerPath: D:/Desktop/b2/360Player.exe
