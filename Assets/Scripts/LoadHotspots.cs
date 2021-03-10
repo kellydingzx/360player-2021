@@ -19,10 +19,13 @@ public class LoadHotspots : MonoBehaviour
     public GameObject displayVideoURL;
     public RawImage displayPhoto;
     public VideoPlayer videoPlayer;
+    public string current_id;
+    public GameObject controller;
 
+    private string project_path;
     private Hashtable table;
-    private string json_path;
     private Boolean loaded;
+    
 
     void Start()
     {
@@ -31,14 +34,26 @@ public class LoadHotspots : MonoBehaviour
         displayPanel.SetActive(false);
     }
 
-    private void Update()
+    void Update()
     {
-        if (json_path != null && !loaded)
+        if(controller.GetComponent<FileManagement>().path_ready && !loaded)
         {
+            project_path = controller.GetComponent<FileManagement>().project_path;
             table = load();
+            videoPlayer.url = Path.Combine(project_path, "MainVideo.mp4");
+            videoPlayer.Prepare();
+            videoPlayer.Play();
             loaded = true;
         }
 
+        if (loaded && controller.GetComponent<VideoManager>().playingMain)
+        {
+            innerUpdate();
+        }
+    }
+
+    private void innerUpdate()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -77,13 +92,20 @@ public class LoadHotspots : MonoBehaviour
         displayName.GetComponent<Text>().text= h.getName();
         displayText.GetComponent<Text>().text= h.getText();
         //Add photo to window
+        Debug.Log(h.getUrl_photo());
         if (h.getUrl_photo() != null)
         {
-            WWW www = new WWW("file:///" + h.getUrl_photo());
+            string photo_path = Path.Combine(project_path, h.getUrl_photo());
+            WWW www = new WWW("file:///" + photo_path);
+            Debug.Log(photo_path);
             displayPhoto.texture = www.texture;
         }
         //Add video url
-        if (h.getUrl_video() != null) {displayVideoURL.GetComponent<Text>().text = h.getUrl_video(); }
+        if (h.getUrl_video() != null) {
+            string video_path = Path.Combine(project_path, h.getUrl_video());
+            Debug.Log(video_path);
+            displayVideoURL.GetComponent<Text>().text = video_path; 
+        }
         
     }
 
@@ -94,7 +116,7 @@ public class LoadHotspots : MonoBehaviour
     }
 
 
-    class Hotspot
+    public class Hotspot
     {
         GameObject hotspot;
         double start_time;
@@ -111,6 +133,18 @@ public class LoadHotspots : MonoBehaviour
             this.end_time = end;
             this.name = name;
         }
+
+        public Hotspot(GameObject a, double start, double end, string name, string text, string url_photo, string url_video)
+        {
+            this.hotspot = a;
+            this.start_time = start;
+            this.end_time = end;
+            this.name = name;
+            this.text = text;
+            this.url_photo = url_photo;
+            this.url_video = url_video;
+        }
+
         public double getStart()
         {
             return start_time;
@@ -163,9 +197,9 @@ public class LoadHotspots : MonoBehaviour
         public double start_time;
         public double end_time;
         public string name;
-        string text;
-        string url_photo;
-        string url_video;
+        public string text;
+        public string url_photo;
+        public string url_video;
         public Vector3 worldPosition;
         public Quaternion rot;
         public HotspotData(double _start_time, double _end_time, string _name, string _text, string _url_photo, string _url_video, GameObject _hotspot)
@@ -201,22 +235,18 @@ public class LoadHotspots : MonoBehaviour
     public Hashtable load()
     {
         Hashtable r = new Hashtable();
+        string json_path = Path.Combine(project_path, "hotspots.json");
         string hotspotjsons = File.ReadAllText(json_path);
-        //File.ReadAllText(Application.dataPath + "/hotspots.json");
         HotspotDatas hotspotdatas = JsonUtility.FromJson<HotspotDatas>(hotspotjsons);
         foreach (string json in hotspotdatas.hotspotdatas)
         {
             HotspotData h1 = JsonUtility.FromJson<HotspotData>(json);
             GameObject a = Instantiate(hotspot, h1.worldPosition, Quaternion.identity);
-            r.Add(a.GetInstanceID().ToString(), new Hotspot(a, h1.start_time, h1.end_time, h1.name));
+            r.Add(a.GetInstanceID().ToString(), new Hotspot(a, h1.start_time, h1.end_time, h1.name, h1.text, h1.url_photo, h1.url_video));
         }
         return r;
     }
 
-    public void loadjson()
-    {
-        json_path = OpenFileBrowser("json");
-    }
 
     // reference: https://github.com/SrejonKhan/AnotherFileBrowser Accessed on: 23rd Feb 2021
     // <summary>
