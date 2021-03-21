@@ -55,32 +55,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Contact_Window.cs" />
-     <Compile Include="Assets\Controller.cs" />
-     <Compile Include="Assets\FileManager.cs" />
-     <Compile Include="Assets\Look_Around.cs" />
-     <Compile Include="Assets\PackageManager.cs" />
+     <Compile Include="Assets\Scripts\BranchProject.cs" />
      <Compile Include="Assets\Scripts\FileManagement.cs" />
      <Compile Include="Assets\Scripts\Helpers\ChooseFile.cs" />
      <Compile Include="Assets\Scripts\Helpers\FileBrowser.cs" />
      <Compile Include="Assets\Scripts\Helpers\JSONHelper.cs" />
-     <Compile Include="Assets\Scripts\Helpers\SoundSliderBehaviour.cs" />
      <Compile Include="Assets\Scripts\InfoPanelControl.cs" />
      <Compile Include="Assets\Scripts\LoadHotspots.cs" />
+     <Compile Include="Assets\Scripts\Look_Around.cs" />
+     <Compile Include="Assets\Scripts\PanelControl.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\AddZoneController.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\DragEventHandler.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\HighlightMgr.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\RegionData.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\SettingsPopUpMgr.cs" />
+     <Compile Include="Assets\Scripts\Scripts2019\SoundSliderBehaviour.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\SoundSliderHandler.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\VideoController.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\VideoProgressBar.cs" />
      <Compile Include="Assets\Scripts\Scripts2019\ZonePopUpController.cs" />
+     <Compile Include="Assets\Scripts\StatusController.cs" />
+     <Compile Include="Assets\Scripts\TimelineController.cs" />
      <Compile Include="Assets\Scripts\VideoManager.cs" />
-     <Compile Include="Assets\Video_Manager.cs" />
-     <Compile Include="Assets\Warning.cs" />
-     <Compile Include="Assets\Window_Graph.cs" />
-     <Compile Include="Assets\spriteBehavior.cs" />
+     <Compile Include="Assets\Scripts\Warning.cs" />
+     <Compile Include="Assets\Scripts\Window_Graph.cs" />
+     <Compile Include="Assets\Scripts\spriteBehavior.cs" />
      <None Include="Assets\csc.rsp" />
      <None Include="Assets\Materials\Shaders\Skybox-Panoramic.shader" />
  <Reference Include="UnityEngine">

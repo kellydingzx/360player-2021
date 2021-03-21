@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -25,8 +26,37 @@ public class VideoManager : MonoBehaviour
 
     void Start()
     {
-        backVideoButton.SetActive(false);
+        //backVideoButton.SetActive(false);
         playingMain = true;
+    }
+    
+    public void removeVideo()
+    {
+        videoPlayer.Stop();
+    }
+    public void loadVideo(string new_url)
+    {
+        if (File.Exists(new_url))
+        {
+            videoPlayer.url = new_url;
+            videoPlayer.Prepare();
+            videoPlayer.Play();
+        }
+    }
+    public long getFrame()
+    {
+        return videoPlayer.frame;
+    }
+
+    public void goToPosinTime(double aim_time)
+    {
+        Debug.Log(videoPlayer.frameCount);
+        videoPlayer.time = aim_time;
+    }
+    public void loadVideoAtFrame(long aim_frame, string video_url)
+    {
+        loadVideo(video_url);
+        videoPlayer.frame = aim_frame;
     }
 
     public void ChangeVideo()

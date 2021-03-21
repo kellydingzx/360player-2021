@@ -11,39 +11,36 @@ using AnotherFileBrowser.Windows;
 
 public class FileManagement : MonoBehaviour
 {
-    //Panels 
-    public GameObject packageNameText;
-    public GameObject packagePathText;
-
-    //Controllers
-    public GameObject mainController;
-
-    //Public Status Variable
-    public bool path_ready;
-    public string project_path;
+    public StatusController statusController;
+    public LoadHotspots controller;
+    public VideoManager videoManager;
 
     private string root_folder;
-    private string project_name;
-    
-
-    void Start()
-    {
-        path_ready = false;
-        root_folder = "";
-    }
-
 
     public void openProject()
     {
         string zip_path = browse_package();
-        project_name = Path.GetFileNameWithoutExtension(zip_path);
+        string project_name = Path.GetFileNameWithoutExtension(zip_path);
         root_folder = Directory.GetParent(zip_path).FullName;
-        ZipFile.ExtractToDirectory(zip_path, root_folder);
-        project_path = System.IO.Path.Combine(root_folder, project_name);
-        Debug.Log(project_path);
-        Debug.Log(project_name);
-        path_ready = true;
-        displayNameAndPath();
+        root_folder = Path.Combine(root_folder, project_name);
+        extractFiles(zip_path);
+        string project_path = Path.Combine(root_folder, project_name);
+        statusController.setNameAndPath(project_name, project_path);
+        videoManager.loadVideo(Path.Combine(project_path, "MainVideo.mp4"));
+        controller.please_load();
+    }
+
+    public void extractFiles(string zip_path)
+    {
+        try
+        {
+            ZipFile.ExtractToDirectory(zip_path, root_folder);
+        }
+        catch (IOException ioException)
+        {
+            root_folder += "-2";
+            extractFiles(zip_path);
+        }
     }
 
 
@@ -60,12 +57,6 @@ public class FileManagement : MonoBehaviour
         });
 
         return path;
-    }
-
-    public void displayNameAndPath()
-    {
-        packageNameText.GetComponent<Text>().text = project_name;
-        packagePathText.GetComponent<Text>().text = project_path;
     }
 
 }
