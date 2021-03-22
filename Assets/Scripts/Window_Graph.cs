@@ -14,7 +14,7 @@ public class Window_Graph : MonoBehaviour
     public TimelineController timelineController;
     public BranchProject branchProject;
     public void Awake() {
-        graphContainer = transform.Find("Graph_Container").GetComponent<RectTransform>();
+        //graphContainer = transform.Find("Graph_Container").GetComponent<RectTransform>();
     }
     public GameObject CreateCircle(Vector2 pos1, string name) {
         GameObject hi = new GameObject(name,typeof(Image));

@@ -14,6 +14,8 @@ public class FileManagement : MonoBehaviour
     public StatusController statusController;
     public LoadHotspots controller;
     public VideoManager videoManager;
+    public TimelineController timelineController;
+    public Window_Graph window_Graph;
 
     private string root_folder;
 
@@ -28,6 +30,9 @@ public class FileManagement : MonoBehaviour
         statusController.setNameAndPath(project_name, project_path);
         videoManager.loadVideo(Path.Combine(project_path, "MainVideo.mp4"));
         controller.please_load();
+        window_Graph.ClearGraph();
+        window_Graph.MainBranch("main");
+        timelineController.draw(statusController.getPath(), 150, 100, 80, 1950);
     }
 
     public void extractFiles(string zip_path)
